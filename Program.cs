@@ -23,8 +23,8 @@ namespace TM
                 return false;
             else m_tileset = new Texture(tileSet);
 
-            m_vertices.PrimitiveType = PrimitiveType.Triangles;
-            m_vertices.Resize(width * height * 6);
+            m_vertices.PrimitiveType = PrimitiveType.Quads;
+            m_vertices.Resize(width * height * 4);
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
@@ -33,13 +33,11 @@ namespace TM
                     int tu = (int)(tileNumber % (m_tileset.Size.X / tileSize.X));
                     int tv = (int)(tileNumber / (m_tileset.Size.X / tileSize.X));
 
-                    uint index = (uint)((i + j * width) * 6);
+                    uint index = (uint)((i + j * width) * 4);
                     m_vertices[index + 0] = new Vertex(new Vector2f(i * tileSize.X, j * tileSize.Y), new Vector2f(tu * tileSize.X, tv * tileSize.Y));
                     m_vertices[index + 1] = new Vertex(new Vector2f((i + 1) * tileSize.X, j * tileSize.Y), new Vector2f((tu + 1) * tileSize.X, tv * tileSize.Y));
-                    m_vertices[index + 2] = new Vertex(new Vector2f(i * tileSize.X, (j + 1) * tileSize.Y), new Vector2f(tu * tileSize.X, (tv + 1) * tileSize.Y));
+                    m_vertices[index + 2] = new Vertex(new Vector2f((i+1) * tileSize.X, (j + 1) * tileSize.Y), new Vector2f((tu+1) * tileSize.X, (tv + 1) * tileSize.Y));
                     m_vertices[index + 3] = new Vertex(new Vector2f(i * tileSize.X, (j + 1) * tileSize.Y), new Vector2f(tu * tileSize.X, (tv + 1) * tileSize.Y));
-                    m_vertices[index + 4] = new Vertex(new Vector2f((i+1) * tileSize.X, j * tileSize.Y), new Vector2f((tu+1) * tileSize.X, tv * tileSize.Y));
-                    m_vertices[index + 5] = new Vertex(new Vector2f((i+1) * tileSize.X, (j + 1) * tileSize.Y), new Vector2f((tu+1) * tileSize.X, (tv + 1) * tileSize.Y));
                 }
             return true;
         }
